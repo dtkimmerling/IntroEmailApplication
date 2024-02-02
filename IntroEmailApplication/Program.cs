@@ -16,30 +16,37 @@ namespace IntroEmailApplication
 
             while (user_wants_to_send_message)
             {
-                Console.WriteLine();
-                Console.WriteLine("New Message");
-
-                var mail = new MimeMessage();
-
-                mail.From.Add(new MailboxAddress("Jared Hoyt", "jaredhoyt@gmail.com")); // TODO: update to your own name and email address
-
-                Console.Write("To: ");
-                mail.To.Add(new MailboxAddress("", Console.ReadLine()));
-
-                Console.Write("Subject: ");
-                mail.Subject = Console.ReadLine();
-
-                Console.Write("Body: ");
-                mail.Body = new TextPart("plain") { Text = Console.ReadLine() };
-
-                using (var client = new SmtpClient())
+                try //try to send an email, will catch any errors
                 {
-                    client.Connect("smtp.gmail.com", SmtpPort, IsSslConnection);
-                    client.Authenticate("jaredhoyt", "abcd efgh ijkl mnop"); // TODO: update to your own username and APP PASSWORD (this is different from your normal password)
-                    client.Send(mail);
-                    client.Disconnect(true);
+                    Console.WriteLine();
+                    Console.WriteLine("New Message");
 
-                    Console.WriteLine("Message sent successfully!");
+                    var mail = new MimeMessage();
+
+                    mail.From.Add(new MailboxAddress("Dylan Kimmerling", "throw.dtk.away@gmail.com")); //Dylan throwaway email account
+
+                    Console.Write("To: ");
+                    mail.To.Add(new MailboxAddress("", Console.ReadLine()));
+                    
+                    Console.Write("Subject: ");
+                    mail.Subject = Console.ReadLine();
+
+                    Console.Write("Body: ");
+                    mail.Body = new TextPart("plain") { Text = Console.ReadLine() };
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", SmtpPort, IsSslConnection);
+                        client.Authenticate("throw.dtk.away", "leiy yirs qufg qukv"); 
+                        client.Send(mail);
+                        client.Disconnect(true);
+
+                        Console.WriteLine("Message sent successfully!");
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("An error occurred, email not sent.");
                 }
 
                 Console.WriteLine();
